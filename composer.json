@@ -1,6 +1,6 @@
 {
     "name": "accunity/reports",
-    "description": "Report generatino module",
+    "description": "Report generation module",
     "type": "asgard-module",
     "license": "MIT", 
     "require": {
