@@ -64,7 +64,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-default btn-flat category-edit-button" data-name="{{$reportmaster->name}}" data-module_id="{{$reportmaster->module_id}}" data-query="{{$reportmaster->query}}" data-orientation="{{$reportmaster->orientation}}" data-papersize="{{$reportmaster->papersize}}" data-type="{{$reportmaster->type}}" data-class="{{$reportmaster->class}}" data-frequency="{{$reportmaster->frequency}}" data-is_mnth_gnrtn="{{$reportmaster->is_mnth_gnrtn}}" data-format="{{$reportmaster->export_formats}}" data-code="{{$reportmaster->code}}" data-id="{{$reportmaster->id}}"><i class="fa fa-pencil"></i></a>
-                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.reports.reportlog.destroy', [$reportmaster->id]) }}"><i class="fa fa-trash"></i></button>
+                                    <button class="btn btn-danger btn-flat" data-toggle="modal" data-target="#modal-delete-confirmation" data-action-target="{{ route('admin.reports.reportmaster.destroy', [$reportmaster->id]) }}"><i class="fa fa-trash"></i></button>
                                 </div>
                             </td>
                         </tr>

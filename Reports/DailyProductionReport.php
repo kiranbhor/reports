@@ -96,14 +96,6 @@ class DailyProductionReport extends AbstractReport
         $this->name = 'daily_production_report';
 
         $this->footer = 'Prepared by :'. auth()->user()->first_name." ".auth()->user()->last_name .'   Verified by :_________________  ' ;
-
-        // For displaying filters description on header
-        $this->meta = [
-            'Duration' => $this->startDate . ' To ' . $this->endDate,
-        ];
-
-        // Do some querying..
-        //$queryBuilder = Product::select('*')->with('codes','variety')->whereBetween('product_date', [$this->startDate, $this->endDate]);
         $queryBuilder = Product::with('codes','variety','bagColor','cartonType');
 
         $this->data = $queryBuilder->get();

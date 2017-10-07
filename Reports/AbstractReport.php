@@ -21,6 +21,11 @@ class AbstractReport
     public $footer;
     public $createdBy;
 
+    public $footerstyle;
+    public $subfooterstyle;
+    public $titlestyle;
+    public $subtitlestyle;
+
 
     public $viewName = 'reports::reports.report';
     public $pageSize;
