@@ -3,6 +3,7 @@
 namespace Modules\Reports\Reports;
 
 
+use Carbon\Carbon;
 use Modules\Process\Entities\Product;
 use PDF;
 
@@ -90,12 +91,13 @@ class DailyProductionReport extends AbstractReport
 
     public function setup(){
 
-        // Report title
-        $this->title = 'Daily Production Report';
 
-        $this->name = 'daily_production_report';
+        $this->reportMaster->sub_title = 'Date: '.Carbon::parse( $this->startDate)->format(PHP_DATE_FORMAT);
 
-        $this->footer = 'Prepared by :'. auth()->user()->first_name." ".auth()->user()->last_name .'   Verified by :_________________  ' ;
+        $this->reportMaster->sub_title_style = 'text-align:left';
+
+        $this->reportMaster->footer = 'Prepared by :'. auth()->user()->first_name." ".auth()->user()->last_name .'   Verified by :_________________  ' ;
+
         $queryBuilder = Product::with('codes','variety','bagColor','cartonType');
 
         $this->data = $queryBuilder->get();

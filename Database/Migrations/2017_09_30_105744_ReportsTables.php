@@ -25,7 +25,7 @@ class ReportsTables extends Migration
             $table->string('is_mnth_gnrtn', 45)->nullable();
             $table->string('export_formats', 255)->nullable();
             $table->string('code', 45)->nullable();
-                $table->string('record_status')->nullable()->default("A");
+            $table->string('record_status')->nullable()->default("A");
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();

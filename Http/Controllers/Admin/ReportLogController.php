@@ -132,7 +132,7 @@ class ReportLogController extends AdminBaseController
         $startDate = $request->input('start_date');
         $endDate = $request->input('end_date');
 
-        $report = new $reportClass($startDate, $endDate,true,PAPER_SIZE_A3,ORIENTATION_PORTRAIT);
+        $report = new $reportClass($reportType,$startDate, $endDate,true);
 
         return $report->viewPDF();
     }

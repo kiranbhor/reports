@@ -86,6 +86,7 @@ class ReportMasterController extends AdminBaseController
      */
     public function update(ReportMaster $reportmaster, UpdateReportMasterRequest $request)
     {
+        $reportmaster = $this->reportmaster->find($request->reportmaster_id);
         $this->reportmaster->update($reportmaster, $request->all());
 
         return redirect()->route('admin.reports.reportmaster.index')

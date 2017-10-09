@@ -5,6 +5,7 @@ namespace Modules\Reports\Reports;
 
 
 use Carbon\Carbon;
+use Modules\Reports\Entities\ReportMaster;
 use PDF;
 
 class AbstractReport
@@ -12,22 +13,10 @@ class AbstractReport
 
     public $startDate;
     public $endDate;
-    public $isExport;
     public $options;
-
-    public $title;
-    public $subtitle;
-    public $subFooter;
-    public $footer;
     public $createdBy;
-
-    public $footerstyle;
-    public $subfooterstyle;
-    public $titlestyle;
-    public $subtitlestyle;
-
-
-    public $viewName = 'reports::reports.report';
+    
+    public $defaultViewName = 'reports::reports.report';
     public $pageSize;
     public $pageOrientation;
 
@@ -43,14 +32,27 @@ class AbstractReport
 
     public $setupDone;
 
-    public function __construct($startDate, $endDate, $isExport, $pageSize = 'a4', $pageOrientation ='portrait',$options = false)
+    public $reportMaster;
+
+    public function __construct(ReportMaster $reportMaster,$startDate, $endDate, $pageSize = null, $pageOrientation =null,$options = false)
     {
+        $this->reportMaster = $reportMaster;
         $this->startDate = $startDate;
         $this->endDate = $endDate;
-        $this->isExport = $isExport;
         $this->options = $options;
-        $this->pageSize = $pageSize;
-        $this->pageOrientation = $pageOrientation;
+        if($pageSize != null )
+        {
+            $this->reportMaster->papersize = $pageSize;   
+        }
+        if($pageOrientation != null)
+        {
+            $this->reportMaster->orientation = $pageOrientation;   
+        }
+        
+        if($this->reportMaster->viewname == null || $this->reportMaster->viewname == "")
+        {
+            $this->reportMaster->viewname = $this->defaultViewName;
+        }
     }
 
     public function setup(){
@@ -61,7 +63,7 @@ class AbstractReport
         if(!$this->setupDone){
             $this->setup();
         }
-        return view($this->viewName)->with('report',$this);
+        return view($this->reportMaster->viewname)->with('report',$this);
     }
 
     public function viewPDF(){
@@ -70,9 +72,15 @@ class AbstractReport
             $this->setup();
         }
 
-        $this->pdf = PDF::loadView($this->viewName,['report'=>$this])->setPaper($this->pageSize, $this->pageOrientation);
+        $this->generatePDF();
 
         return $this->pdf->stream();
+    }
+
+    public function generatePDF()
+    {
+        $this->pdf = PDF::loadView($this->reportMaster->viewname,['report'=>$this])
+            ->setPaper($this->reportMaster->papersize, $this->reportMaster->orientation);
     }
 
     public function downloadPDF(){
@@ -80,7 +88,7 @@ class AbstractReport
             $this->setup();
         }
 
-        $this->pdf = PDF::loadView($this->viewName,['report'=>$this])->setPaper($this->pageSize, $this->pageOrientation);
+        $this->generatePDF();
 
         return $this->pdf->download();
 

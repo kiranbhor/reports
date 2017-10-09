@@ -22,6 +22,15 @@ class ReportMaster extends Model
         'frequency',
         'is_mnth_gnrtn',
         'export_formats',
-        'code'
+        'code',
+        'title',
+        'sub_title',
+        'sub_footer',
+        'sub_title_style',
+        'footer',
+        'title_style',
+        'sub_footer_style',
+        'footer_style',
+        'viewname'
     ];
 }
