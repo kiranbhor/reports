@@ -83,6 +83,7 @@ class ReportModuleController extends AdminBaseController
      */
     public function update(ReportModule $reportmodule, UpdateReportModuleRequest $request)
     {
+        $reportmodule = $this->reportmodule->find($request->reportmodule_id);
         $this->reportmodule->update($reportmodule, $request->all());
 
         return redirect()->route('admin.reports.reportmodule.index')

@@ -471,7 +471,7 @@
             $("#old-name").val($(this).data("name"));
             $("#update-form").find('input[name="name"]').val($(this).data("name"));
             $("#update-form").find('input[name="query"]').val($(this).data("query"));
-            $("#update-form").find('input[name="module_id"]').val($(this).data("module_id"));
+            $("#update-form").find('select[name="module_id"]').val($(this).data("module_id")).trigger('change');
             $("#update-form").find('input[name="orientation"]').val($(this).data("orientation"));
             $("#update-form").find('input[name="papersize"]').val($(this).data("papersize"));
             $("#update-form").find('input[name="type"]').val($(this).data("type"));
