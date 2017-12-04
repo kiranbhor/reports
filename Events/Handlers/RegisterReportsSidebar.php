@@ -39,7 +39,7 @@ class RegisterReportsSidebar implements \Maatwebsite\Sidebar\SidebarExtender
     {
         $menu->group(trans('core::sidebar.content'), function (Group $group) {
             $group->item(trans('reports::reports.title.report list'), function (Item $item) {
-                $item->icon('fa fa-copy');
+                $item->icon('fa fa-bar-chart');
                 $item->weight(10);
                 $item->authorize(
                      'reports.module.admin'
@@ -49,7 +49,7 @@ class RegisterReportsSidebar implements \Maatwebsite\Sidebar\SidebarExtender
                 foreach ($reportModules as $reportModule) {
                     $item->item(trans($reportModule->name),function (Item $item) use($reportModule) {
                         $item->icon($reportModule->icon_class);
-                        $item->weight($reportModule->order);
+                        $item->weight((int)$reportModule->order);
                         $item->append('admin.reports.reportlog.create');
                         $item->route('admin.reports.reportlog.index',$reportModule->id);
                         $item->authorize(

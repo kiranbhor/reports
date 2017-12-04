@@ -2,6 +2,7 @@
 
 namespace Modules\Reports\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use App\Libraries\Utils;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -129,9 +130,8 @@ class ReportLogController extends AdminBaseController
         $reportType = app(ReportMasterRepository::class)->find($request->input('report_Type'));
         $reportClass = 'Modules\\Reports\\Reports\\'.Str::studly($reportType->class).'Report';
 
-        $startDate = $request->input('start_date');
-        $endDate = $request->input('end_date');
-
+        $startDate = Carbon::parse($request->input('start_date'));
+        $endDate = Carbon::parse($request->input('end_date'));
         $report = new $reportClass($reportType,$startDate, $endDate,true);
 
         return $report->viewPDF();

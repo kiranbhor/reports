@@ -25,32 +25,40 @@
 
                     <?php $value;
 
+                        //Set if value to the given value if the force value is set
                         if(isset($column['force_value'])){
                             $value = $column['force_value'];
                         }
                         else if(isset($column['type'])){
+                            //Column type is set and it is a rowid column
                             if($column['type'] === REPORT_ROWNO_COLUMN){
                                 $value = $i;
                             }
+                            //Column type is set and it is a relation column
                             else if($column['type'] === REPORT_RELATION_COLUMN){
+
+                                //Get the final relation model
+                                $modelArray  = explode('.',$column['column_name']);
+                                $relationModel = $row;
+
+                                foreach ($modelArray as $subModel){
+                                    $relationModel = $relationModel->{$subModel};
+                                }
+
+                                //Custom function is set so call custom function
                                 if(isset($column['function'])){
-                                    $value = $column['function']($row->{$column['column_name']},$column['relation_column']);
+                                    $value = $column['function']($relationModel,$column['relation_column']);
                                 }
                                 else{
-                                    $value = isset($row->{$column['column_name']})?$row->{$column['column_name']}->{$column['relation_column']}:'';
+                                    $value = isset($relationModel)?$relationModel->{$column['relation_column']}:'';
                                 }
-
-
                             }
-
-                        }
-                        else if(isset($column['function'])){
-                            $value = $column['function']($row->{$column['column_name']},$column['column_name']);
                         }
                         else{
                             $value = $row->{$column['column_name']};
                         }
 
+                        //Format the value of the model
                         if(isset($column['format'])){
                             $value = formatValue($value,$column['format']);
                         }
